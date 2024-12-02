@@ -32,7 +32,7 @@ const MovieTrailerPlayer = ({ movieTitle }:MovieTrailerPlayerProps) => {
       };
       fetchTrailer();
     }
-  }, [movieTitle]);
+  }, [movieTitle, API_KEY]);
 
   return (
     <div className="player-wrapper">
