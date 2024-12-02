@@ -1,5 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
+import ReactPlayer from 'react-player';
+import MovieTrailerPlayer from '../../components/ui/movieTrailer/MovieTrailerPlayer';
 
 const MainImage = styled.img`
   height: 440px;
@@ -13,7 +15,11 @@ export default function Detail(): JSX.Element {
   console.log(movie);
   const images = movie.stills.map((url: string) => ({ url }));
   console.log(images);
-
+  const movieTitle = `${movie.movieNm} trailer`
+  console.log('===================');
+  console.log(movieTitle);
+  console.log(encodeURIComponent(movieTitle));
+  const searchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(movieTitle)}+trailer`;
   const Container = styled.div`
     display: flex;
     margin: 70px auto;
@@ -39,6 +45,9 @@ export default function Detail(): JSX.Element {
           <h1>{movie.movieNm}</h1>
           {movie.openDt}
           <p>{movie.runtime}</p>
+          <div>
+            <MovieTrailerPlayer movieTitle={ movie.movieNm} />
+    </div>
           <p style={{ color: 'black' }}>{movie.directorNm}</p>
           <p style={{ color: 'black' }}>{movie.rating}</p>
           <h5 style={{ color: 'black' }}>{movie.plot}</h5>

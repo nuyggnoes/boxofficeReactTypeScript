@@ -1,3 +1,8 @@
 node_modules/
 
-.yarn/cache
+.yarn/cache/
+
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+config.tsx
