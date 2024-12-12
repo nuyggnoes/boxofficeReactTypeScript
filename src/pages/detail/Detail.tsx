@@ -1,58 +1,121 @@
 import { useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
 import MovieTrailerPlayer from '../../components/ui/movieTrailer/MovieTrailerPlayer';
-
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import MovieTitle from '../../components/ui/text/MovieTitle';
+import MoviePlot from '../../components/ui/text/MoviePlot';
+import MovieSummary from '../../components/ui/text/MovieSummary';
+import ActorSearch from '../../hooks/useFetchActorImg';
 
 export default function Detail(): JSX.Element {
+  // const location = useLocation();
+  // const { movie } = location.state || {};
+  // console.log(movie);
+  // const images = movie.stills.map((url: string) => ({ url }));
+  // console.log(images);
+  // const movieTitle = `${movie.movieNm} trailer`
+  // console.log(movieTitle);
+  // console.log(encodeURIComponent(movieTitle));
   const location = useLocation();
-  const { movie } = location.state || {};
-  console.log(movie);
-  const images = movie.stills.map((url: string) => ({ url }));
-  console.log(images);
-  const movieTitle = `${movie.movieNm} trailer`
-  console.log('===================');
-  console.log(movieTitle);
-  console.log(encodeURIComponent(movieTitle));
-  // const searchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(movieTitle)}+trailer`;
-  const Container = styled.div`
+  const searchParams = new URLSearchParams(location.search);
+  const movieId = searchParams.get('movie_id');
+  const movie = useSelector((state: RootState) =>
+    state.movies.movieList.find((movie) => movie.movieId === movieId),
+  );
+  const Wrapper = styled.div`
     display: flex;
     margin: 70px auto;
     width: 800px;
-    color: white;
-    background: linear-gradient(
+    /* color: white; */
+    flex-direction: column;
+    /* background: linear-gradient(
       to bottom,
-      rgba(0, 123, 255, 0.5) 30%,
-      white 50%
-    );
+      rgba(100, 123, 105, 1) 20%,
+      black 50%
+    ); */
+    border: 1px solid white;
     border-radius: 10px;
   `;
   const MainImg = styled.img`
     border-radius: 10px;
-    height: 440px;
-    width: 307px;
+    height: 220px;
+    width: 150px;
+    position: absolute;
+    right: 15px;
+    top: -100px;
   `;
+  const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 25px;
+    /* position: relative; */
+    margin-top: 100px;
+    padding: 25px;
+  `;
+  if (!movie) {
+    return <div>Movie not found</div>;
+  }
+  console.log(movie);
   return (
     <>
-      <Container>
-        <MainImg src={movie.image} />
-        <div>
-          <h1>{movie.movieNm}</h1>
-          {movie.openDt}
-          <p>{movie.runtime}</p>
-          <div>
-            <MovieTrailerPlayer movieTitle={ movie.movieNm} />
-        </div>
-          <p style={{ color: 'black' }}>{movie.directorNm}</p>
-          <p style={{ color: 'black' }}>{movie.rating}</p>
-          <h5 style={{ color: 'black' }}>{movie.plot}</h5>
+      <Wrapper>
+        {/* <div style={{ display: 'flex', flexDirection:"column", padding:'20px'}}>
+          <MainTitleText>{movie.movieNm}</MainTitleText>
+          {movie.titleEng}
+          {movie.openDt.split('-')[0]}
+        </div> */}
+        <MovieTitle
+          movieNm={movie.movieNm}
+          titleEng={movie.titleEng}
+          openYear={movie.openDt.split('-')[0]}
+        />
+        <MovieTrailerPlayer movieTitle={movie.movieNm} />
+        <Container>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              position: 'relative',
+              marginBottom: '40px',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                height: '100px',
+                alignItems: 'center',
+              }}
+            >
+              <MovieSummary
+                genre={movie.genre}
+                directorNm={movie.directorNm}
+                movieOpenDt={movie.openDt.replaceAll('-', '.')}
+                nation={movie.nation}
+                runtime={movie.runtime}
+              />
+            </div>
+            <MainImg src={movie.image} />
+          </div>
+          <MoviePlot plot={movie.plot} />
+          {/* <div style={{ width:"75%" }}>{movie.plot}</div> */}
+          <h1>{movie.rank}위</h1>
+          <p>누적 관람객 {movie.audiAcc}</p>
+          <p>{movie.directorNm}</p>
+          <p>{movie.rating}</p>
           {movie.actorNm.map((element: string, index: number) => (
-            <p key={index}>{element}</p>
+            <div key={index}>
+              <p>{element}</p>
+            </div>
           ))}
-          {movie.stills.map((element: string, index: number) => (
-            <img key={index} src={element} alt='' />
-          ))}
-        </div>
-      </Container>
+          <div>
+            {movie.stills.map((element: string, index: number) => (
+              <img key={index} src={element} alt="" />
+            ))}
+          </div>
+        </Container>
+      </Wrapper>
     </>
   );
 }

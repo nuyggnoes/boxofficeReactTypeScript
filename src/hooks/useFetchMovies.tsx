@@ -5,13 +5,13 @@ import { Movie, Actor } from '../components/ui/card/Card.types';
 
 export function useFetchMovies(lastWeek: string) {
     const [loading, setLoading] = useState(true);
-    const [movieList, setMovieList] = useState<Movie[]>([]);
+  const [movieList, setMovieList] = useState<Movie[]>([]);
     const fetchMovies = useCallback(async () => {
         try {
           const response = await axios.get(
             `${KOBIS.BASE_URL}?key=${KOBIS.API_KEY}&targetDt=${lastWeek}`,
           );
-          const movieList = response.data.boxOfficeResult.weeklyBoxOfficeList;
+          const movieList = response.data.boxOfficeResult.dailyBoxOfficeList;
           const detailedMovies = await Promise.all(
             movieList.map(async (movie: Movie) => {
               const detailResponse = await axios.get(
@@ -20,6 +20,7 @@ export function useFetchMovies(lastWeek: string) {
                 )}&releaseDts=${movie.openDt}&ServiceKey=${KMDB.API_KEY}`,
               );
               const data = detailResponse.data?.Data[0]?.Result[0];
+              const titleEng = data?.titleEng;
               const movieId = data?.DOCID;
               const image = data?.posters?.split('|')[0];
               const actorNm = data?.actors?.actor
@@ -29,22 +30,25 @@ export function useFetchMovies(lastWeek: string) {
               const plot = data?.plots.plot[0].plotText;
               const rating = data?.rating;
               const runtime = data?.runtime;
+              const genre = data?.genre;
               const stills = data?.stlls?.split('|');
               return {
                 ...movie,
+                titleEng,
                 movieId,
                 image,
                 actorNm,
                 directorNm,
                 plot,
                 rating,
+                genre,
                 runtime,
                 stills,
               };
             }),
           );
+          console.log(detailedMovies);
           setMovieList(detailedMovies);
-          console.log('complete');
         } catch (error) {
           console.log(error);
         } finally {

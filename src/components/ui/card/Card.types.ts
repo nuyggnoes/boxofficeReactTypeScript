@@ -1,5 +1,6 @@
 export type Movie = {
   movieId: string;
+  titleEng: string;
   rank: number;
   movieNm: string;
   openDt: string;
@@ -10,6 +11,9 @@ export type Movie = {
   rating: string;
   runtime: string;
   stills: string[];
+  audiAcc: string;
+  genre: string;
+  nation: string;
 };
 
 export type Actor = {

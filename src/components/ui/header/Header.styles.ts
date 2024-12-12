@@ -17,11 +17,14 @@ export const Title = styled.div`
   font-size: 100px;
   font-family: 'Monoton', sans-serif;
 
-  @media screen and (max-width: 1030px) {
-    font-size: 60px;
+  @media screen and (max-width: 1439px) and (min-width: 1024px) {
+    font-size: 80px;
   }
 
-  @media screen and (max-width: 680px) {
+  @media screen and (max-width: 1023px) and (min-width: 768px) {
+    font-size: 60px;
+  }
+  @media screen and (max-width: 767px) {
     font-size: 30px;
   }
 `;
