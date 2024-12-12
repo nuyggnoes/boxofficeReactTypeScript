@@ -27,6 +27,7 @@ const MoviePlot = ({ plot }: { plot: string }) => {
         borderRadius: '10px',
         transition: 'background-color 0.2s ease',
         padding: '10px',
+        marginBottom: '20px',
       }}
       onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#f0f0f0')}
       onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}

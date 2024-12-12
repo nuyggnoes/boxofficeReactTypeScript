@@ -6,17 +6,9 @@ import { RootState } from '../../redux/store';
 import MovieTitle from '../../components/ui/text/MovieTitle';
 import MoviePlot from '../../components/ui/text/MoviePlot';
 import MovieSummary from '../../components/ui/text/MovieSummary';
-import ActorSearch from '../../hooks/useFetchActorImg';
+import RankCard from '../../components/ui/card/RankCard';
 
 export default function Detail(): JSX.Element {
-  // const location = useLocation();
-  // const { movie } = location.state || {};
-  // console.log(movie);
-  // const images = movie.stills.map((url: string) => ({ url }));
-  // console.log(images);
-  // const movieTitle = `${movie.movieNm} trailer`
-  // console.log(movieTitle);
-  // console.log(encodeURIComponent(movieTitle));
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const movieId = searchParams.get('movie_id');
@@ -99,9 +91,7 @@ export default function Detail(): JSX.Element {
             <MainImg src={movie.image} />
           </div>
           <MoviePlot plot={movie.plot} />
-          {/* <div style={{ width:"75%" }}>{movie.plot}</div> */}
-          <h1>{movie.rank}위</h1>
-          <p>누적 관람객 {movie.audiAcc}</p>
+          <RankCard audiAcc={movie.audiAcc} rank={String(movie.rank)} />
           <p>{movie.directorNm}</p>
           <p>{movie.rating}</p>
           {movie.actorNm.map((element: string, index: number) => (
