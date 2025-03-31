@@ -24,7 +24,7 @@
     "types": ["@emotion/react/types/css-prop"]
   },
   "include": [
-    "src"
+    "src", "vite-env.d.ts"
   ],
   "exclude": ["node_modules"]
 }

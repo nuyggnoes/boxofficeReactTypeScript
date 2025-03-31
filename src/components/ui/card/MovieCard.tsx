@@ -12,6 +12,7 @@ export default function Card({ movie }: CardProps): JSX.Element {
   const movePage = () => {
     navigate(`/detail?movie_id=${movie.movieId}`, { state: { movie } });
   };
+  console.log(movie.image);
 
   return (
     <>

@@ -4,8 +4,6 @@ import { Actor, Movie } from "../components/ui/card/MovieCard.types";
 import { KMDBData } from "./KMDBData";
 
 export async function fetchBoxOfficeList(date: string) {
-    console.log('📦', process.env.REACT_APP_YOUTUBE_API_KEY);
-
     const response = await axios.get(
         `${KOBIS.BASE_URL}?key=${KOBIS.API_KEY}&targetDt=${date}`,
     );
