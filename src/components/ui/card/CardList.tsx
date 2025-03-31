@@ -1,6 +1,6 @@
-import * as S from './Card.styles';
-import { Movie } from './Card.types';
-import Card from './Card';
+import * as S from './MovieCard.styles';
+import { Movie } from './MovieCard.types';
+import Card from './MovieCard';
 
 type CardListProps = {
   movies: Movie[];

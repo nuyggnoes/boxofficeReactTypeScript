@@ -8,17 +8,17 @@ export const globalStyles = css`
 export const GridWrapper = styled.div`
   display: grid;
   width: max-content;
-  grid-template-columns: repeat(3, 1fr); /* 한 줄에 5개 */
-  gap: 20px; /* 카드 사이의 간격 */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
   padding: 16px;
   margin: 0 auto;
 
   @media screen and (max-width: 1030px) {
-    grid-template-columns: repeat(2, 1fr); /* 한 줄에 5개 */
+    grid-template-columns: repeat(2, 1fr);
   }
 
   @media screen and (max-width: 680px) {
-    grid-template-columns: repeat(1, 1fr); /* 한 줄에 5개 */
+    grid-template-columns: repeat(1, 1fr);
   }
 `;
 
@@ -32,13 +32,13 @@ export const Card = styled.div`
   cursor: pointer;
   transition: transform 0.2s;
   &:hover {
-    transform: scale(1.05); /* 마우스 오버 시 확대 */
+    transform: scale(1.05);
   }
   &:hover .movie-title {
-    opacity: 1; /* 마우스 오버 시 영화 제목 표시 */
+    opacity: 1; 
   }
   &:hover .movie-rank {
-    opacity: 1; /* 마우스 오버 시 영화 순위 표시 */
+    opacity: 1; 
   }
 `;
 
@@ -58,5 +58,5 @@ export const MovieRank = styled.div`
   font-weight: 700;
   padding: 10px;
   font-family: 'Luckiest Guy', sans-serif;
-  -webkit-text-stroke: 1px white; /* 흰색 테두리 */
+  -webkit-text-stroke: 1px white; 
 `;

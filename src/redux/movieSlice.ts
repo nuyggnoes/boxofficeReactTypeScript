@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from 'axios';
-import { KMDB, KOBIS } from "../config";
-import { Actor, Movie } from "../components/ui/card/Card.types";
+import { Movie } from "../components/ui/card/MovieCard.types";
+import { fetchBoxOfficeList, fetchMovieDetail } from "../api/movieAPI";
 
 interface MovieState{
     movieList: Movie[];
@@ -15,44 +14,16 @@ const initialState: MovieState = {
     error: null,
 };
 
+
 // 비동기 API 호출
 // 비동기 액션 생성자
 export const fetchMovies = createAsyncThunk(
     'movies/fetchMovies',
     async (lastWeek: string, { rejectWithValue }) => {
       try {
-        const response = await axios.get(
-          `${KOBIS.BASE_URL}?key=${KOBIS.API_KEY}&targetDt=${lastWeek}`,
-        );
-        const movieList = response.data.boxOfficeResult.dailyBoxOfficeList;
-
+        const boxOfficeList = await fetchBoxOfficeList(lastWeek);
         const detailedMovies = await Promise.all(
-          movieList.map(async (movie: Movie) => {
-            const detailResponse = await axios.get(
-              `${KMDB.BASE_URL}?collection=kmdb_new2&detail=Y&title=${encodeURIComponent(
-                movie.movieNm,
-              )}&releaseDts=${movie.openDt}&ServiceKey=${KMDB.API_KEY}`,
-            );
-            const data = detailResponse.data?.Data[0]?.Result[0];
-            console.log(data);
-  
-            return {
-              ...movie,
-              titleEng: data?.titleEng || '',
-              movieId: data?.DOCID || '',
-              image: data?.posters?.split('|')[0] || '',
-              actorNm: data?.actors?.actor
-                .map((actor: Actor) => actor.actorNm)
-                .slice(0, 10),
-              directorNm: data?.directors?.director[0]?.directorNm || '',
-              plot: data?.plots?.plot[0]?.plotText || '',
-              rating: data?.rating || '',
-              runtime: data?.runtime || '',
-              stills: data?.stlls?.split('|') || [],
-              genre: data?.genre,
-              nation: data?.nation
-            };
-          }),
+          boxOfficeList.map((movie: Movie) => fetchMovieDetail(movie))
         );
         return detailedMovies;
       } catch (error: any) {

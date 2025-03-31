@@ -14,6 +14,7 @@ export type Movie = {
   audiAcc: string;
   genre: string;
   nation: string;
+  keyword: string;
 };
 
 export type Actor = {

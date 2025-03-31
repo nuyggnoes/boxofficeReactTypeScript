@@ -1,6 +1,6 @@
 import { Global } from '@emotion/react';
-import * as S from './Card.styles';
-import { Movie } from './Card.types';
+import * as S from './MovieCard.styles';
+import { Movie } from './MovieCard.types';
 import { useNavigate } from 'react-router-dom';
 
 type CardProps = {

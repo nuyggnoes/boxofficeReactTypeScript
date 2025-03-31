@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 
 export const globalStyles = css`
   @import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Bungee+Tint&display=swap');
 `;
 
 export const Wrapper = styled.div`
@@ -16,6 +17,7 @@ export const Title = styled.div`
   color: white;
   font-size: 100px;
   font-family: 'Monoton', sans-serif;
+  font-family: "Bungee Tint", sans-serif;
 
   @media screen and (max-width: 1439px) and (min-width: 1024px) {
     font-size: 80px;

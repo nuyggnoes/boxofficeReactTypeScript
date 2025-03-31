@@ -15,12 +15,10 @@ export const useFetchYoutube = (movieTitle: string) => {
           setTrailerUrl(cachedUrl);
           return { trailerUrl };
         }
-        console.log('Before AXIOS');
         const response = await axios.get(
           `${YOUTUBE.BASE_URL}${encodeURIComponent(movieTitle + ' trailer')}&key=${API_KEY}`,
         );
         const videoId = response?.data?.items[0].id.videoId;
-
         const url = `${YOUTUBE.WATCH_URL}${videoId}`;
         localStorage.setItem(movieTitle, url);
         setTrailerUrl(url);
